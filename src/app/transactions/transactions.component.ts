@@ -37,12 +37,12 @@ export class TransactionsComponent {
   }
 
   public nexPage() {
-    const maxIndex = this.maxFilteredTransactionsPageIndex(this.filteredTransactions.length);
+    const lastPageIndex = this.lastPageIndex(this.filteredTransactions.length);
 
-    if (this.pageIndex == maxIndex) {
+    if (this.pageIndex == lastPageIndex) {
       this.dbService.loadNextPage(this.PAGE_SIZE).then(() => {
         this.updateTransactionsLists();
-        this.pageIndex = this.maxFilteredTransactionsPageIndex(this.filteredTransactions.length);
+        this.pageIndex = this.lastPageIndex(this.filteredTransactions.length);
       })
       return;
     }
@@ -125,7 +125,7 @@ export class TransactionsComponent {
     })
   }
 
-  private maxFilteredTransactionsPageIndex(transactionsNumber: number) {
+  private lastPageIndex(transactionsNumber: number) {
     let index = Math.floor((transactionsNumber - 1) / this.PAGE_SIZE);
     if (index < 0) index = 0;
     return index;
