@@ -3,10 +3,12 @@
         <div class="card mt-4 mb-4">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
-                        <h5 class="card-title mb-4">List of transactions</h5>
-                    </div>
                     <div class="col-md-8">
+                        <h5 class="card-title mb-4 mx-1 d-inline-block">List of transactions</h5>
+                        <span><i>({{dbService.getTransactions().length}} transactions loaded,
+                                matching filters {{getFilteredTransactions().length}})</i></span>
+                    </div>
+                    <div class="col-md-4">
                         <nav class="float-end">
                             <ul class="pagination">
                                 <li class="page-item">
@@ -18,11 +20,8 @@
                                 <li class="page-item active">
                                     <a class="page-link">{{pageIndex+1}}</a>
                                 </li>
-                                <li class="page-item"><a class="page-link"
-                                        (click)="setPage(pageIndex+1)">{{pageIndex+1+1}}</a>
-                                </li>
                                 <li class="page-item">
-                                    <a class="page-link" (click)="setPage(pageIndex+1)">Next</a>
+                                    <a class="page-link" (click)="nexPage()">Next</a>
                                 </li>
                             </ul>
                         </nav>
@@ -32,7 +31,7 @@
                     <div class="col-12 col-xl-4">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="search-description">Search</span>
-                            <input [(ngModel)]="descriptionQuery" (ngModelChange)="resetPageSearch()" type="text"
+                            <input [(ngModel)]="descriptionQuery" (ngModelChange)="setPage(0)" type="text"
                                 class="form-control" placeholder="at least 3 characters" aria-label="Search string"
                                 aria-describedby="search-description">
                         </div>
@@ -59,14 +58,8 @@
                         </div>
                     </div>
                 </div>
-
-                <div  *ngFor="let transaction of dbService.getTransactions()
-                                    | timeFilter : timeFilter
-                                    | priceRange : priceFrom : priceTo
-                                    | filterDescription : descriptionQuery 
-                                    | currentPage : pageIndex : PAGE_SIZE">
-                    <hr>
-                    <app-transaction [transaction]="transaction"></app-transaction>
+                <div *ngFor="let transaction of getFilteredTransactions() | currentPage : pageIndex : PAGE_SIZE">
+                    <hr> <app-transaction [transaction]="transaction"></app-transaction>
                 </div>
             </div>
         </div>
