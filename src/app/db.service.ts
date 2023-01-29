@@ -41,23 +41,17 @@ export class DBService {
     return this.transactions;
   }
 
-  // if view wants to see more transactions than currently loaded we load more
   loadNextPage(pageSize: number) {
     return new Promise((resolve) => {
       let startIndex = this.transactions.length;
       // we don't have to unsubscribe from http, it's done automatically
       this.http.post<Transaction[]>(this.apiPath, { start_at: startIndex, limit: pageSize })
         .subscribe(newChunk => {
-          let oldChunk = this.transactions;
-          // we have to change array reference so Angular can notice change and refresh view
-          this.transactions = [];
-          this.transactions.push(...oldChunk)
           this.transactions.push(...newChunk);
           resolve(this.transactions);
         })
     });
   }
-
 
   private transactions: Transaction[] = [];
   private readonly apiPath = "https://2fn4h5gwz1.execute-api.us-east-1.amazonaws.com/dev/data";
