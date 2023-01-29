@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { DBService, Transaction } from './db.service';
 
 
 @Component({

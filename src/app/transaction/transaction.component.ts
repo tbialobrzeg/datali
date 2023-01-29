@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Transaction } from '../db.service';
 
 @Component({
@@ -6,11 +6,11 @@ import { Transaction } from '../db.service';
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.css']
 })
-export class TransactionComponent{
+export class TransactionComponent {
 
   constructor() { }
 
   @Input()
-  public transaction : Transaction = {} as Transaction;
+  public transaction: Transaction = {} as Transaction;
 
 }

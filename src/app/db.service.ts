@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Data } from '@angular/router';
-import { Observable, EMPTY } from 'rxjs';
-
 
 export interface Transaction {
   id: number,
