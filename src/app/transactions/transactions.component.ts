@@ -66,8 +66,6 @@ export class TransactionsComponent {
     this.filteredTransactions = this.descriptionFilterFunc(this.allTransactions);
     this.filteredTransactions = this.timeFilterFunc(this.filteredTransactions);
     this.filteredTransactions = this.priceFilterFunc(this.filteredTransactions);
-
-    return this.filteredTransactions;
   }
 
   // Angular doesn't recommend to sort or filter in pipes
