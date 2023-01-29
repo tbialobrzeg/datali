@@ -1,0 +1,9 @@
+<div class="row mb-2">
+    <div class="col-auto"><img src="{{transaction | pictureURL}}" class="max-width-100 img-thumbnail"></div>
+    <div class="col-8">
+        <div><b>Transaction ID: </b>{{transaction.id}}</div>
+        <div><b>Created: </b>{{transaction | printDate}}</div>
+        <div><b>Price: </b>{{transaction | printPrice}}</div>
+        <div><b>Description:</b><br>{{transaction.description}}</div>
+    </div>
+</div>

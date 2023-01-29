@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card mt-4 mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5 class="card-title mb-4">List of transactions</h5>
+                    </div>
+                    <div class="col-md-8">
+                        <nav class="float-end">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" (click)="setPage(pageIndex-1)">Previous</a>
+                                </li>
+                                <li *ngIf="pageIndex>0" class="page-item">
+                                    <a class="page-link" (click)="setPage(0)">1</a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link">{{pageIndex+1}}</a>
+                                </li>
+                                <li class="page-item"><a class="page-link"
+                                        (click)="setPage(pageIndex+1)">{{pageIndex+1+1}}</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" (click)="setPage(pageIndex+1)">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-xl-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="search-description">Search</span>
+                            <input [(ngModel)]="descriptionQuery" (ngModelChange)="resetPageSearch()" type="text"
+                                class="form-control" placeholder="at least 3 characters" aria-label="Search string"
+                                aria-describedby="search-description">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="price-from">Price from</span>
+                            <input [(ngModel)]="priceFrom" (ngModelChange)="setPage(0)" type="text" class="form-control"
+                                placeholder="" aria-label="Price from" aria-describedby="price-from">
+                            <span class="input-group-text" id="price-to">to</span>
+                            <input [(ngModel)]="priceTo" (ngModelChange)="setPage(0)" type="text" class="form-control"
+                                placeholder="" aria-label="Price to" aria-describedby="price-to">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="time">Time</span>
+                            <select class="form-select" [(ngModel)]="timeFilter" (ngModelChange)="setPage(0)">
+                                <option value="{{TimeFilter.WHOLE_TIME}}">whole time</option>
+                                <option value="{{TimeFilter.THIS_YEAR}}">this year</option>
+                                <option value="{{TimeFilter.THIS_MONTH}}">this month</option>
+                                <option value="{{TimeFilter.PREVIOUS_MONTH}}">previous month</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div  *ngFor="let transaction of dbService.getTransactions()
+                                    | timeFilter : timeFilter
+                                    | priceRange : priceFrom : priceTo
+                                    | filterDescription : descriptionQuery 
+                                    | currentPage : pageIndex : PAGE_SIZE">
+                    <hr>
+                    <app-transaction [transaction]="transaction"></app-transaction>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
