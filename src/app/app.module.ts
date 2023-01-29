@@ -1,4 +1,3 @@
-import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';  
@@ -31,7 +30,6 @@ import { TransactionComponent } from './transaction/transaction.component';
     TransactionComponent
   ],
   imports: [
-    NgSelectModule,
     FormsModule,
     BrowserModule,
     AppRoutingModule,
